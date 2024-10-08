@@ -26,28 +26,15 @@ class LoggerManager:
         self.logger = logging.getLogger(name)
         
         # Verifica livello BASE del Debug: standard = 1: passa tutto
-        try:
-            if not(0 <= base_log_level <= 50):
-                base_log_level = 1
-        except:
-            base_log_level = 1
+        base_log_level = min(max(base_log_level, 0), 50) if isinstance(base_log_level, int) else 1
 
         # Verifica livello Debug per File: standard = 20: INFO
-        try:
-            if not(0 <= file_log_level <= 50):
-                file_log_level = 20
-        except:
-            file_log_level = 20
+        file_log_level = min(max(file_log_level, 0), 50) if isinstance(file_log_level, int) else 20
         
         # Verifica livello Log per Console: standard = 10: DEBUG
-        try:
-            if not(0 <= console_log_level <= 50):
-                console_log_level = 10
-        except:
-            console_log_level = 10
-
-        
-        # Imposto il livello alla base dei log che vengon passati agli Handler
+        console_log_level = min(max(console_log_level, 0), 50) if isinstance(console_log_level, int) else 10
+              
+        # Imposto il livello alla base dei log che vengono passati agli Handler
         self.logger.setLevel(base_log_level)
 
         # imposto i 2 formatter per il File (DateTime) e per la Consolle (no DateTime)
@@ -99,5 +86,6 @@ Rimangono da gestire:
 - i file per data o altro metodo (dimensione ?)
 - il progressivo all'interno della stessa data (o mettiamo da Ora a Ora)
 - verifica del superamento di una soglia di dimensione
+- Sostituzione del Try-except con       min(max(value, 0), 50)
 '''
 
