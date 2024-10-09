@@ -20,6 +20,14 @@ class LoggerManager:
         CRITICAL  50  Errore critico bloccante
     '''
 
+    ''' PARAMETRI:
+        name              Nome che si vuole assegnare al logger
+        log_file          Nome_file per outpu su file. None=non viene creato 
+        base_log_level    Livello base del logger
+        file_log_level    Livello di log per l'output su File
+        console_log_level Livello di log per l'outpu su consolle 
+    '''
+
     def __init__(self, name, log_file=None,
                  base_log_level=1, file_log_level=None, console_log_level=None):
         
@@ -53,27 +61,10 @@ class LoggerManager:
         console_handler.setLevel(console_log_level)
         console_handler.setFormatter(cons_formatter)
         self.logger.addHandler(console_handler)
-    
-    # override dei messaggi di Output del Logging
-    def debug(self, message):
-        self.logger.debug(message)
-        
-    def info(self, message):
-        self.logger.info(message)
-        
-    def warning(self, message):
-        self.logger.warning(message)
-        
-    def error(self, message):
-        self.logger.error(message)
-        
-    def critical(self, message):
-        self.logger.critical(message)
-
-
 
 if(__name__ == "__main__"):
-    logger = LoggerManager(__name__, file_log_level=30, console_log_level=10)
+    logger_manager = LoggerManager(__name__, file_log_level=30, console_log_level=10)
+    logger = logger_manager.logger
     logger.debug('test con un "Debug level"')
     logger.info('test con un "Info level"')
     logger.warning('test con un "Warning level"')
@@ -85,7 +76,7 @@ if(__name__ == "__main__"):
 Rimangono da gestire:
 - i file per data o altro metodo (dimensione ?)
 - il progressivo all'interno della stessa data (o mettiamo da Ora a Ora)
-- verifica del superamento di una soglia di dimensione
-- Sostituzione del Try-except con       min(max(value, 0), 50)
+- verifica del superamento di una soglia di dimensione per i file su disco
+- 
 '''
 
